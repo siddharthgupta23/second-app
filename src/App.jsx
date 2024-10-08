@@ -34,9 +34,16 @@ const App = () => {
   };
 
   const handleAddTask = () => {
-    const taskInput = document.querySelector(".task-input");
-
+    let taskInput = document.querySelector(".task-input");
+    
+ if(!taskInput)
+    {
+      createInputField();
+      taskInput=document.querySelector(".task-input")
+    }
     const inputData = taskInput.value.trim();
+
+   
     if (inputData) {
       createTaskElement(inputData);
       taskInput.value = "";
@@ -64,8 +71,36 @@ const App = () => {
     } else {
       event.target.parentElement.remove();
     }
+   
     saveTasksToLocalStorage();
+     if(!contentDiv.querySelector(".task-input"))
+    {
+      createInputField();
+
+    }
   };
+
+  const anbghr=()=>{
+    contentDiv=document.querySelector(".content")
+    if(!document.querySelector(".task-input"))
+    {
+      createInputField()
+    }
+
+  }
+  const createInputField = () => {
+    const taskContainer = document.querySelector(".todo-item");
+    const inputField = document.createElement("input");
+    inputField.setAttribute("type", "text");
+    inputField.setAttribute("placeholder", "Enter a task");
+    inputField.classList.add("task-input");
+    taskContainer.appendChild(inputField);
+    console.log(taskContainer)
+    console.log(inputField)
+  };
+  setTimeout(anbghr,0)
+
+
   let oj = { 1: "abc", 2: "sd", 3: "poij", 4: "mlpi", 5: "qweik" };
   let arr = ["1", "2", "3", "4", "5"];
   let score = 0;
@@ -109,6 +144,7 @@ const App = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
   };
+  
 
   return (
     <div>
@@ -298,11 +334,12 @@ const App = () => {
             contentDiv = div;
           }}
         >
-          <div class="todo-item">
+          <div>
             <label for="task" name="task"></label>
             <input
               type="text"
               name="task"
+              
               placeholder="Enter the task you want to add"
               class="task-input"
             />
@@ -316,6 +353,7 @@ const App = () => {
             </button>
           </div>
         </div>
+        
       </form>
       <button id="add-button" onClick={handleAddTask}>
         Add Button
